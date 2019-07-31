@@ -31,7 +31,7 @@ public enum FetcherError: Error {
 /// (decryption for example).
 
 // Default implementation.
-open class Fetcher {
+open public class Fetcher {
     /// The publication.
     let publication: Publication
     /// The container to fetch resources from.
@@ -41,7 +41,7 @@ open class Fetcher {
     /// The content filter.
     let contentFilters: ContentFilters!
 
-    internal init(publication: Publication, container: Container) throws {
+    public init(publication: Publication, container: Container) throws {
         self.container = container
         self.publication = publication
 
@@ -62,7 +62,7 @@ open class Fetcher {
     /// - Parameter path: The relative path to the asset in the publication.
     /// - Returns: The decrypted data of the asset.
     /// - Throws: `EpubFetcherError.missingFile`.
-    internal func data(forRelativePath path: String) throws -> Data? {
+    public func data(forRelativePath path: String) throws -> Data? {
         // Get the link information from the publication
         guard publication.resource(withRelativePath: path) != nil else {
             throw FetcherError.missingFile(path: path)
@@ -73,7 +73,7 @@ open class Fetcher {
         return data
     }
 
-    internal func data(forLink link: Link) throws -> Data? {
+    public func data(forLink link: Link) throws -> Data? {
         let path = link.href
         var data = try container.data(relativePath: path)
         data = try contentFilters.apply(to: data, of: publication, with: container, at: path)
@@ -85,7 +85,7 @@ open class Fetcher {
     /// - Parameter path: The relative path to the asset in the publication.
     /// - Returns: A seekable input stream with the decrypted data if the resource.
     /// - Throws: `EpubFetcherError.missingFile`.
-    internal func dataStream(forRelativePath path: String) throws -> SeekableInputStream {
+    public func dataStream(forRelativePath path: String) throws -> SeekableInputStream {
         var inputStream: SeekableInputStream
 
         // Get the link information from the publication
@@ -101,7 +101,7 @@ open class Fetcher {
         return inputStream
     }
 
-    internal func dataStream(forLink link: Link) throws -> SeekableInputStream? {
+    public func dataStream(forLink link: Link) throws -> SeekableInputStream? {
         var inputStream: SeekableInputStream
         let path = link.href
         // Get an input stream from the container
@@ -117,7 +117,7 @@ open class Fetcher {
     /// - Parameter path: The relative path to the asset in the publication.
     /// - Returns: The length of the data.
     /// - Throws: `EpubFetcherError.missingFile`.
-    internal func dataLength(forRelativePath path: String) throws -> UInt64 {
+    public func dataLength(forRelativePath path: String) throws -> UInt64 {
         // Build the path relative to the container
         let relativePath = rootFileDirectory.appending(pathComponent: path)
 
