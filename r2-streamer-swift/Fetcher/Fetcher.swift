@@ -31,15 +31,15 @@ public enum FetcherError: Error {
 /// (decryption for example).
 
 // Default implementation.
-final public class Fetcher {
+open class Fetcher {
     /// The publication.
-    let publication: Publication
+    var publication: Publication
     /// The container to fetch resources from.
-    let container: Container
+    var container: Container
     /// The relative path to the directory holding the resources in the container.
-    let rootFileDirectory: String
+    var rootFileDirectory: String
     /// The content filter.
-    let contentFilters: ContentFilters!
+    var contentFilters: ContentFilters!
 
     public init(publication: Publication, container: Container) throws {
         self.container = container
