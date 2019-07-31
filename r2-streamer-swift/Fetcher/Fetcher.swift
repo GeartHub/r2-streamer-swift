@@ -31,7 +31,7 @@ public enum FetcherError: Error {
 /// (decryption for example).
 
 // Default implementation.
-open class Fetcher {
+final public class Fetcher {
     /// The publication.
     let publication: Publication
     /// The container to fetch resources from.
