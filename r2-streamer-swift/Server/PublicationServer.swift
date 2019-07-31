@@ -33,7 +33,7 @@ public enum PublicationServerError: Error{
 }
 
 /// The HTTP server for the publication's manifests and assets. Serves Epubs.
-public class PublicationServer: ResourcesServer {
+open class PublicationServer: ResourcesServer {
     /// The HTTP server.
     var webServer: GCDWebServer
     
