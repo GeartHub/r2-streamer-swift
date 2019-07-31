@@ -33,13 +33,13 @@ public enum FetcherError: Error {
 // Default implementation.
 open class Fetcher {
     /// The publication.
-    var publication: Publication
+    public var publication: Publication
     /// The container to fetch resources from.
-    var container: Container
+    public var container: Container
     /// The relative path to the directory holding the resources in the container.
-    var rootFileDirectory: String
+    public var rootFileDirectory: String
     /// The content filter.
-    var contentFilters: ContentFilters!
+    public var contentFilters: ContentFilters!
 
     public init(publication: Publication, container: Container) throws {
         self.container = container
