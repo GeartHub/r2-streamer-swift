@@ -139,7 +139,7 @@ open class Fetcher {
     /// - Returns: The corresponding ContentFilters subclass.
     /// - Throws: In case the mimetype is nil or invalid, throws a
     ///           `FetcherError.missingContainerMimetype`
-    open static func getContentFilters(forMimeType mimeType: String?) throws -> ContentFilters {
+    static func getContentFilters(forMimeType mimeType: String?) throws -> ContentFilters {
         guard let mimeType = mimeType else {
             throw FetcherError.missingContainerMimetype
         }
