@@ -15,7 +15,7 @@ import Fuzi
 /// Protocol defining the content filters. They are implemented below and used
 /// in the fetcher. They come in different flavors depending of the container
 /// data mimetype.
-internal protocol ContentFilters: Loggable {
+public protocol ContentFilters: Loggable {
 
     func apply(to input: SeekableInputStream, of publication: Publication, with container: Container, at path: String) throws -> SeekableInputStream
 
@@ -24,7 +24,7 @@ internal protocol ContentFilters: Loggable {
 }
 
 // Default implementation. Do nothing.
-internal extension ContentFilters {
+public extension ContentFilters {
 
     func apply(to input: SeekableInputStream, of publication: Publication, with container: Container, at path: String) throws -> SeekableInputStream {
         return input
@@ -45,7 +45,7 @@ internal extension ContentFilters {
 /// Filters:
 ///     - Font deobfuscation using the Decoder object.
 ///     - HTML injections (scripts css/js).
-final internal class ContentFiltersEpub: ContentFilters {
+final public class ContentFiltersEpub: ContentFilters {
 
     /// Apply the Epub content filters on the content of the `input` stream para-
     /// meter.
@@ -55,7 +55,7 @@ final internal class ContentFiltersEpub: ContentFilters {
     ///   - publication: The publiaction containing the resource.
     ///   - path: The path of the resource relative to the Publication.
     /// - Returns: The resource after the filters have been applyed.
-    internal func apply(to input: SeekableInputStream, of publication: Publication, with container: Container, at path: String) -> SeekableInputStream {
+    public func apply(to input: SeekableInputStream, of publication: Publication, with container: Container, at path: String) -> SeekableInputStream {
         /// Get the link for the resource.
         guard let resourceLink = publication.link(withHref: path) else {
             return input

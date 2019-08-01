@@ -33,13 +33,13 @@ public enum FetcherError: Error {
 // Default implementation.
 open class Fetcher {
     /// The publication.
-    let publication: Publication
+    public let publication: Publication
     /// The container to fetch resources from.
-    let container: Container
+    public let container: Container
     /// The relative path to the directory holding the resources in the container.
-    let rootFileDirectory: String
+    public let rootFileDirectory: String
     /// The content filter.
-    let contentFilters: ContentFilters!
+    public let contentFilters: ContentFilters!
 
     public init(publication: Publication, container: Container) throws {
         self.container = container
@@ -57,18 +57,6 @@ open class Fetcher {
         contentFilters = try Fetcher.getContentFilters(forMimeType: container.rootFile.mimetype)
     }
     
-    open func getPublication() -> Publication {
-        return self.publication
-    }
-    open func getContainer() -> Container {
-        return self.container
-    }
-    open func getrootFileDirectory() -> String {
-        return self.rootFileDirectory
-    }
-    open func getcontentFilters() -> ContentFilters {
-        return self.contentFilters
-    }
     /// Gets the data from an resource file in a publication's container.
     ///
     /// - Parameter path: The relative path to the asset in the publication.
