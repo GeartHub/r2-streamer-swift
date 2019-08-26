@@ -37,7 +37,7 @@ open class DataInputStream: SeekableInputStream {
 
     //
 
-    override init(data: Data) {
+    override public init(data: Data) {
         self.data = data
         _offset = 0
         super.init(data: data)
