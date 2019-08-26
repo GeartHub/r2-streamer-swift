@@ -11,21 +11,21 @@
 
 import Foundation
 
-internal class DataInputStream: SeekableInputStream {
+open class DataInputStream: SeekableInputStream {
 
     let data: Data
 
     // Mark - `Seekable` overrides.
-    override internal var length: UInt64 {
+    override public var length: UInt64 {
         return UInt64(data.count)
     }
 
     private var _offset: UInt64
-    override internal var offset: UInt64 {
+    override public var offset: UInt64 {
         return _offset
     }
 
-    override internal func seek(offset: Int64, whence: SeekWhence) throws {
+    override public func seek(offset: Int64, whence: SeekWhence) throws {
         assert(whence == .startOfFile, "Only seek from start of stream is supported for now.")
         assert(offset >= 0, "Since only seek from start of stream if supported, offset must be >= 0")
         guard UInt64(offset) < length else {
@@ -47,7 +47,7 @@ internal class DataInputStream: SeekableInputStream {
 
     /// The status of the fileHandle
     private var _streamStatus: Stream.Status = .notOpen
-    override internal var streamStatus: Stream.Status {
+    override open var streamStatus: Stream.Status {
         get {
             return _streamStatus
         }
@@ -55,34 +55,34 @@ internal class DataInputStream: SeekableInputStream {
 
     /// to remove, useless.
     private var _streamError: Error?
-    override internal var streamError: Error? {
+    override open var streamError: Error? {
         get {
             return _streamError
         }
     }
 
-    override internal var hasBytesAvailable: Bool {
+    override open var hasBytesAvailable: Bool {
         get {
             return offset < length
         }
     }
 
-    override internal func open() {
+    override open func open() {
         _streamStatus = .open
     }
 
-    override internal func close() {
+    override open func close() {
         _offset = 0
         _streamStatus = .notOpen
     }
 
-    override internal func getBuffer(_ buffer: UnsafeMutablePointer<UnsafeMutablePointer<UInt8>?>,
+    override open func getBuffer(_ buffer: UnsafeMutablePointer<UnsafeMutablePointer<UInt8>?>,
                                      length len: UnsafeMutablePointer<Int>) -> Bool
     {
         return false
     }
 
-    override internal func read(_ buffer: UnsafeMutablePointer<UInt8>, maxLength: Int) -> Int {
+    override open func read(_ buffer: UnsafeMutablePointer<UInt8>, maxLength: Int) -> Int {
         // Calculate readSize.
         let readSize = (maxLength > Int(length - offset) ? Int(length - offset) : maxLength)
         // Define range
